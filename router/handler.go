@@ -42,7 +42,7 @@ func loadEnv() config {
 	}
 }
 
-func createOauth2Url() string {
+func createRequestUrl() string {
 	cfg := loadEnv()
 
 	baseURL := "https://accounts.google.com/o/oauth2/v2/auth"
@@ -56,7 +56,7 @@ func createOauth2Url() string {
 	return oauth2URL
 }
 
-func createOauth2Body(code string) *bytes.Buffer {
+func createRequestBody(code string) *bytes.Buffer {
 	cfg := loadEnv()
 
 	body := oauth2Body{
@@ -73,12 +73,12 @@ func createOauth2Body(code string) *bytes.Buffer {
 }
 
 func Oauth2(c *gin.Context) {
-	c.Redirect(http.StatusMovedPermanently, createOauth2Url())
+	c.Redirect(http.StatusMovedPermanently, createRequestUrl())
 }
 
 func Oauth2Callback(c *gin.Context) {
 	req, err := http.NewRequest(
-		"POST", "https://oauth2.googleapis.com/token", createOauth2Body(c.Query("code")))
+		"POST", "https://oauth2.googleapis.com/token", createRequestBody(c.Query("code")))
 	if err != nil {
 		panic(err)
 	}
