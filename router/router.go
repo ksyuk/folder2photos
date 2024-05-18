@@ -9,7 +9,7 @@ func Start() {
 
 	router.GET("/access-token", Oauth2)
 
-	router.GET("/oauth2callback", Oauth2Callback)
+	router.GET("/callback", Oauth2Callback)
 
 	router.Run(":8080")
 }
